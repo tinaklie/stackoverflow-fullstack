@@ -1,30 +1,8 @@
-type Query {
-  questionById(id: ID!): Question
-  questions: [Question!]!
-}
-
-interface Question {
-  _id: ID!
-  title: String!
-  description: String!
-  answers: [Answer!]!
-  comments: [Comment!]!
-  votes: Int!
-}
-# input QuestionInput {
-#   title: String!
-#   description: String!
-# }
-
 interface Answer {
   _id: ID!
   questionId: ID!
   text: String!
 }
-# input AnswerInput {
-#   questionId: ID!
-#   text: String!
-# }
 
 interface Comment {
   _id: ID!
@@ -32,7 +10,16 @@ interface Comment {
   text: String!
 }
 
-input CommentInput {
-  questionId: ID!
-  text: String!
+type Query {
+  questionById(id: ID!): Question
+  questions: [Question!]!
+}
+
+interface Question {
+  _id: ID!
+  answers: [Answer!]!
+  comments: [Comment!]!
+  description: String!
+  title: String!
+  votes: Int!
 }
