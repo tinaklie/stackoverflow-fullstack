@@ -1,13 +1,18 @@
-import { createYoga } from "graphql-yoga";
+import { renderGraphiQL } from "@graphql-yoga/render-graphiql";
+import { createSchema, createYoga } from "graphql-yoga";
 import { createServer } from "http";
-import { connectToDb } from "./db/db_context";
 import * as dotenv from "dotenv";
+import { GqlContext, createContext } from "./create-context";
+import { typeDefinitions } from "./schema";
 
 dotenv.config();
 
 async function main() {
-  connectToDb();
-  const yoga = createYoga({});
+  const schema = createSchema<GqlContext>({
+    typeDefs: typeDefinitions,
+  });
+  const context = await createContext();
+  const yoga = createYoga({ schema, context, renderGraphiQL });
   const server = createServer(yoga);
   server.listen(3000, () => {
     console.log("Server is running on http://localhost:3000/graphql");

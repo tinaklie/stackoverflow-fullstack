@@ -7,9 +7,10 @@ interface Question {
   _id: ID!
   title: String!
   description: String!
-  votes: Number!
+  answers: [Answer!]!
+  comments: [Comment!]!
+  votes: Int!
 }
-
 # input QuestionInput {
 #   title: String!
 #   description: String!
@@ -20,8 +21,18 @@ interface Answer {
   questionId: ID!
   text: String!
 }
-
 # input AnswerInput {
 #   questionId: ID!
 #   text: String!
 # }
+
+interface Comment {
+  _id: ID!
+  questionId: ID!
+  text: String!
+}
+
+input CommentInput {
+  questionId: ID!
+  text: String!
+}
