@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Main = () => {
+export const Main = () => {
   return (
     <>
       <h1>Main Page</h1>
@@ -10,5 +10,3 @@ const Main = () => {
     </>
   );
 };
-
-export default Main;

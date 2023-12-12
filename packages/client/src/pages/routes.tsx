@@ -1,6 +1,6 @@
 import { Outlet, RouteObject } from "react-router-dom";
-import Question from "./Question";
-import Main from "./Main";
+import { Question } from "./Question";
+import { Main } from "./Main";
 
 export const routes: RouteObject[] = [
   {
