@@ -1,11 +1,21 @@
-interface Answer {
+type Answer {
   _id: ID!
   questionId: ID!
   text: String!
 }
 
-interface Comment {
+input AnswerInput {
+  questionId: ID!
+  text: String!
+}
+
+type Comment {
   _id: ID!
+  questionId: ID!
+  text: String!
+}
+
+input CommentInput {
   questionId: ID!
   text: String!
 }
@@ -15,10 +25,16 @@ type Query {
   questions: [Question!]!
 }
 
-interface Question {
+type Question {
   _id: ID!
   answers: [Answer!]!
   comments: [Comment!]!
+  description: String!
+  title: String!
+  votes: Int!
+}
+
+input QuestionInput {
   description: String!
   title: String!
   votes: Int!

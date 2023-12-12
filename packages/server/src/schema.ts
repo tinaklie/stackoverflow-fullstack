@@ -4,7 +4,7 @@ export const typeDefinitions = /* GraphQL */ `
     questions: [Question!]!
   }
 
-  interface Question {
+  type Question {
     _id: ID!
     title: String!
     description: String!
@@ -13,14 +13,30 @@ export const typeDefinitions = /* GraphQL */ `
     votes: Int!
   }
 
-  interface Answer {
+  input QuestionInput {
+    title: String!
+    description: String!
+    votes: Int!
+  }
+
+  type Answer {
     _id: ID!
     questionId: ID!
     text: String!
   }
 
-  interface Comment {
+  input AnswerInput {
+    questionId: ID!
+    text: String!
+  }
+
+  type Comment {
     _id: ID!
+    questionId: ID!
+    text: String!
+  }
+
+  input CommentInput {
     questionId: ID!
     text: String!
   }
