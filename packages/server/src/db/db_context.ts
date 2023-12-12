@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import { AnswerDB, QuestionDB } from "./types";
 
 export async function connectToDb() {
   console.log("process.env", process.env.MONGO_URL);
@@ -6,8 +7,8 @@ export async function connectToDb() {
   const db = client.db(process.env.MONGO_DATABASE ?? "questions-sample");
   return {
     db,
-    questions: db.collection("questions"),
-    answers: db.collection("answers"),
+    questions: db.collection<QuestionDB>("questions"),
+    answers: db.collection<AnswerDB>("answers"),
   };
 }
 
