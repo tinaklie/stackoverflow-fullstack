@@ -13,7 +13,7 @@ export const routes: RouteObject[] = [
       },
       {
         path: "question",
-        element: <Question></Question>,
+        children: [{ path: ":id", element: <Question></Question> }],
       },
     ],
   },

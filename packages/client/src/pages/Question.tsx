@@ -1,3 +1,27 @@
-export const Question = () => {
-  return <h1>Question Page</h1>;
+import { useQuery } from "@apollo/client";
+import { useParams } from "react-router-dom";
+import { graphql } from "../gql";
+
+const questionDocument = graphql(/* GraphQL */ `
+  query GetQuestion($id: ID!) {
+    questionById(id: $id) {
+      _id
+      title
+      description
+      votes
+    }
+  }
+`);
+
+export const Question: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+
+  const { data } = useQuery(questionDocument, { variables: { id: id! } });
+
+  return (
+    <>
+      <h2>{data?.questionById?.title}</h2>
+      <div>{data?.questionById?.description}</div>
+    </>
+  );
 };
