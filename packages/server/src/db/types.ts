@@ -4,7 +4,6 @@ export interface QuestionDB {
   _id: ObjectId;
   title: string;
   description: string;
-  answers: AnswerDB[];
   comments: CommentDB[];
   votes: number;
 }
@@ -13,10 +12,11 @@ export interface AnswerDB {
   _id: ObjectId;
   questionId: ObjectId;
   text: string;
+  comments: CommentDB[];
+  votes: number;
 }
 
 export interface CommentDB {
   _id: ObjectId;
-  questionId: ObjectId;
   text: string;
 }

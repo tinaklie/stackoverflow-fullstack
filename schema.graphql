@@ -2,21 +2,21 @@ type Answer {
   _id: ID!
   questionId: ID!
   text: String!
+  votes: Int!
 }
 
 input AnswerInput {
   questionId: ID!
   text: String!
+  votes: Int!
 }
 
 type Comment {
   _id: ID!
-  questionId: ID!
   text: String!
 }
 
 input CommentInput {
-  questionId: ID!
   text: String!
 }
 
@@ -27,7 +27,6 @@ type Query {
 
 type Question {
   _id: ID!
-  answers: [Answer!]!
   comments: [Comment!]!
   description: String!
   title: String!

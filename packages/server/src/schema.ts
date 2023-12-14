@@ -8,7 +8,6 @@ export const typeDefinitions = /* GraphQL */ `
     _id: ID!
     title: String!
     description: String!
-    answers: [Answer!]!
     comments: [Comment!]!
     votes: Int!
   }
@@ -23,21 +22,21 @@ export const typeDefinitions = /* GraphQL */ `
     _id: ID!
     questionId: ID!
     text: String!
+    votes: Int!
   }
 
   input AnswerInput {
     questionId: ID!
     text: String!
+    votes: Int!
   }
 
   type Comment {
     _id: ID!
-    questionId: ID!
     text: String!
   }
 
   input CommentInput {
-    questionId: ID!
     text: String!
   }
 `;
