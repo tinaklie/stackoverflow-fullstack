@@ -1,5 +1,6 @@
 :root {
   --light: #f4f4f4;
+  --main-light: #dbe6f1;
   --main: #afc4db;
   --dark: #2b517c;
   --text: #000;
@@ -21,6 +22,10 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: min-content 1fr min-content;
+}
+
+.separator-line {
+  border-bottom: 1px solid var(--main);
 }
 
 .footer {

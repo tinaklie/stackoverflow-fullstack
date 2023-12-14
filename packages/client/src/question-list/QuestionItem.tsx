@@ -22,6 +22,7 @@ export const QuestionItem: React.FC<Props> = ({ question }) => {
     <div className="questionItem">
       <div className="reactions-col">
         <div>{questionItem.votes} votes</div>
+        {/* TODO: get count of answers by id */}
         <div> ~ answers</div>
       </div>
       <div>

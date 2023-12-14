@@ -25,7 +25,7 @@ export const Main: React.FC = () => {
       <div className="question-counter"> {data?.questions.length} questions</div>
       {data?.questions.map((q) => (
         <div key={q._id}>
-          <div className="separator-line"></div>
+          <div className="separator-line" />
           <QuestionItem question={q} />
         </div>
       ))}

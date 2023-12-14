@@ -2,6 +2,7 @@ import "./Question.css";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { graphql } from "../gql";
+import { QAItem } from "../question-details/QAItem";
 
 const questionDocument = graphql(/* GraphQL */ `
   query GetQuestion($id: ID!) {
@@ -9,6 +10,10 @@ const questionDocument = graphql(/* GraphQL */ `
       _id
       title
       description
+      comments {
+        _id
+        text
+      }
       votes
     }
   }
@@ -19,10 +24,14 @@ export const Question: React.FC = () => {
 
   const { data } = useQuery(questionDocument, { variables: { id: id! } });
 
-  return (
-    <div className="question-main">
-      <h2>{data?.questionById?.title}</h2>
-      <div>{data?.questionById?.description}</div>
-    </div>
-  );
+  const questionItem = data?.questionById;
+  if (questionItem)
+    return (
+      <div className="question-main">
+        <h2>{questionItem?.title}</h2>
+        <div className="separator-line" />
+        <QAItem votes={questionItem.votes} comments={questionItem.comments} text={questionItem.description} />
+        <div className="answers">{/* <div className="question-counter"> {answers.length} questions</div> */}</div>
+      </div>
+    );
 };

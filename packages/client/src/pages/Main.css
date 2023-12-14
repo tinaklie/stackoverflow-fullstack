@@ -22,10 +22,6 @@
   background-color: var(--dark);
 }
 
-.separator-line {
-  border-bottom: 1px solid var(--main);
-}
-
 .question-counter {
   margin-top: 1em;
   font-weight: 500;
