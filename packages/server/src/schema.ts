@@ -22,6 +22,7 @@ export const typeDefinitions = /* GraphQL */ `
     _id: ID!
     questionId: ID!
     text: String!
+    comments: [Comment!]!
     votes: Int!
   }
 

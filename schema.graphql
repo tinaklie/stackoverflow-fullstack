@@ -1,5 +1,6 @@
 type Answer {
   _id: ID!
+  comments: [Comment!]!
   questionId: ID!
   text: String!
   votes: Int!
