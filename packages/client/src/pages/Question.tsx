@@ -19,11 +19,29 @@ const questionDocument = graphql(/* GraphQL */ `
   }
 `);
 
+// const answersDocument = graphql(/* GraphQL */ `
+//   query GetAnswers($id: ID!) {
+//     answers(questionId: $id) {
+//       _id
+//       text
+//       comments {
+//         _id
+//         text
+//       }
+//       votes
+//     }
+//   }
+// `);
+
+// const answersDocument = graphql(/* GraphQL */ ``);
+
 export const Question: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
   const { data } = useQuery(questionDocument, { variables: { id: id! } });
+  // const answers = useQuery(answersDocument, { variables: { id: id! } });
 
+  // console.log(answers);
   const questionItem = data?.questionById;
   if (questionItem)
     return (

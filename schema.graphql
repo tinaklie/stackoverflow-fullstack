@@ -22,6 +22,7 @@ input CommentInput {
 }
 
 type Query {
+  answers: [Answer!]!
   questionById(id: ID!): Question
   questions: [Question!]!
 }

@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import { AnswerDB, QuestionDB } from "./types";
 
 export async function connectToDb() {
@@ -59,6 +59,12 @@ export async function connectToDb() {
   //   }
   // );
 
+  const x = await db
+    .collection<AnswerDB>("answers")
+    .find({ questionId: new ObjectId("657ab8be96872c88e7b1a1af") })
+    .toArray();
+
+  console.log(x);
   return {
     db,
     questions: db.collection<QuestionDB>("questions"),
