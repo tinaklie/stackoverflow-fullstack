@@ -1,0 +1,27 @@
+.questionItem {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 100px 1fr;
+  gap: 2em;
+  padding: 0.5em 0;
+}
+
+.reactions-col {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+.description-preview {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.posting-info {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}

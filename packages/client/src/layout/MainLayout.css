@@ -1,0 +1,30 @@
+:root {
+  --light: #f4f4f4;
+  --main: #afc4db;
+  --dark: #2b517c;
+  --text: #000;
+}
+
+body {
+  margin: 0;
+}
+
+.main {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--light);
+  color: var(--text);
+}
+
+.layout {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content 1fr min-content;
+}
+
+.footer {
+  background-color: var(--dark);
+  padding: 1em;
+  color: var(--light);
+}

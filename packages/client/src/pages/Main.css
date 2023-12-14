@@ -1,0 +1,32 @@
+.question-list {
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+  height: 100%;
+  gap: 0.5rem;
+}
+
+.questions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.question {
+  display: flex;
+}
+
+.add-question-button {
+  padding: 0.6em 1em;
+  height: min-content;
+  background-color: var(--dark);
+}
+
+.separator-line {
+  border-bottom: 1px solid var(--main);
+}
+
+.question-counter {
+  margin-top: 1em;
+  font-weight: 500;
+}

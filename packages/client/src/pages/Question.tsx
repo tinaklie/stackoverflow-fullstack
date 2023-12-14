@@ -1,3 +1,4 @@
+import "./Question.css";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { graphql } from "../gql";
@@ -19,9 +20,9 @@ export const Question: React.FC = () => {
   const { data } = useQuery(questionDocument, { variables: { id: id! } });
 
   return (
-    <>
+    <div className="question-main">
       <h2>{data?.questionById?.title}</h2>
       <div>{data?.questionById?.description}</div>
-    </>
+    </div>
   );
 };
