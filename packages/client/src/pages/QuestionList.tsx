@@ -1,4 +1,4 @@
-import "./Main.css";
+import "./QuestionList.css";
 import { graphql } from "../gql";
 import { useQuery } from "@apollo/client";
 import { QuestionItem } from "../question-list/QuestionItem";
@@ -13,7 +13,7 @@ const questionListDocument = graphql(/* GraphQL */ `
   }
 `);
 
-export const Main: React.FC = () => {
+export const QuestionList: React.FC = () => {
   const { data } = useQuery(questionListDocument);
 
   return (

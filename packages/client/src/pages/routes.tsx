@@ -1,6 +1,6 @@
 import { Outlet, RouteObject } from "react-router-dom";
 import { Question } from "./Question";
-import { Main } from "./Main";
+import { QuestionList } from "./QuestionList";
 import { MainLayout } from "../layout/MainLayout";
 
 export const routes: RouteObject[] = [
@@ -14,7 +14,7 @@ export const routes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <Main></Main>,
+        element: <QuestionList></QuestionList>,
       },
       {
         path: "question",
