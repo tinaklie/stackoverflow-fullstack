@@ -19,19 +19,19 @@ const questionDocument = graphql(/* GraphQL */ `
   }
 `);
 
-// const answersDocument = graphql(/* GraphQL */ `
-//   query GetAnswers($id: ID!) {
-//     answers(questionId: $id) {
-//       _id
-//       text
-//       comments {
-//         _id
-//         text
-//       }
-//       votes
-//     }
-//   }
-// `);
+const answersDocument = graphql(/* GraphQL */ `
+  query GetAnswers($id: ID!) {
+    answers(questionId: $id) {
+      _id
+      text
+      comments {
+        _id
+        text
+      }
+      votes
+    }
+  }
+`);
 
 // const answersDocument = graphql(/* GraphQL */ ``);
 
@@ -39,17 +39,30 @@ export const Question: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
   const { data } = useQuery(questionDocument, { variables: { id: id! } });
-  // const answers = useQuery(answersDocument, { variables: { id: id! } });
+  const answers = useQuery(answersDocument, { variables: { id: id! } });
 
-  // console.log(answers);
   const questionItem = data?.questionById;
+  const answersItems = answers.data?.answers;
   if (questionItem)
     return (
       <div className="question-main">
         <h2>{questionItem?.title}</h2>
         <div className="separator-line" />
-        <QAItem votes={questionItem.votes} comments={questionItem.comments} text={questionItem.description} />
-        <div className="answers">{/* <div className="question-counter"> {answers.length} questions</div> */}</div>
+        <QAItem
+          votes={questionItem.votes}
+          comments={questionItem.comments}
+          text={questionItem.description}
+          type="question"
+        />
+        <div className="answers">
+          <div className="question-counter">{answersItems?.length} questions</div>
+          {answersItems?.map((a) => (
+            <div className="answer-item" key={a._id}>
+              <QAItem votes={a.votes} comments={a.comments} text={a.text} type="answer" />
+              <div className="separator-line" />
+            </div>
+          ))}
+        </div>
       </div>
     );
 };
