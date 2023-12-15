@@ -1,0 +1,19 @@
+.editor-main {
+  padding: 1em;
+}
+
+input,
+textarea {
+  width: 100%;
+  background-color: var(--light);
+  border: 1px solid var(--main);
+  border-radius: 4px;
+}
+
+label {
+  padding-right: 1em;
+}
+
+.description {
+  padding-top: 1em;
+}

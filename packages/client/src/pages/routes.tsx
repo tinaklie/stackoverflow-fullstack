@@ -2,6 +2,7 @@ import { Outlet, RouteObject } from "react-router-dom";
 import { Question } from "./Question";
 import { QuestionList } from "./QuestionList";
 import { MainLayout } from "../layout/MainLayout";
+import { CreateQuestionPage } from "../question-create/CreateQuestionPage";
 
 export const routes: RouteObject[] = [
   {
@@ -18,7 +19,10 @@ export const routes: RouteObject[] = [
       },
       {
         path: "question",
-        children: [{ path: ":id", element: <Question></Question> }],
+        children: [
+          { path: "ask", element: <CreateQuestionPage /> },
+          { path: ":id", element: <Question /> },
+        ],
       },
     ],
   },

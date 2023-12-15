@@ -21,6 +21,10 @@ input CommentInput {
   text: String!
 }
 
+type Mutation {
+  saveQuestion(question: QuestionInput!): ID!
+}
+
 type Query {
   answers(questionId: ID!): [Answer!]!
   questionById(id: ID!): Question
@@ -38,5 +42,4 @@ type Question {
 input QuestionInput {
   description: String!
   title: String!
-  votes: Int!
 }

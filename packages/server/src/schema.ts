@@ -6,6 +6,10 @@ export const typeDefinitions = /* GraphQL */ `
     # answers(questionId: ID!): [Answer!]!
   }
 
+  type Mutation {
+    saveQuestion(question: QuestionInput!): ID!
+  }
+
   type Question {
     _id: ID!
     title: String!
@@ -17,7 +21,6 @@ export const typeDefinitions = /* GraphQL */ `
   input QuestionInput {
     title: String!
     description: String!
-    votes: Int!
   }
 
   type Answer {
