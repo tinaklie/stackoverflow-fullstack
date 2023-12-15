@@ -1,7 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { Main } from "../../src/pages/Main";
 import { render, screen } from "../utils/test-utils";
-import React from "react";
 
 describe("QuestionListPage", () => {
   test("page rendered", async () => {
