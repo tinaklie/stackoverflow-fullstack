@@ -2,7 +2,7 @@ export const typeDefinitions = /* GraphQL */ `
   type Query {
     questions: [Question!]!
     questionById(id: ID!): Question
-    answers: [Answer!]!
+    answers(questionId: ID!): [Answer!]!
     # answers(questionId: ID!): [Answer!]!
   }
 

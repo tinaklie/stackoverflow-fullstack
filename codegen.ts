@@ -12,6 +12,7 @@ const config: CodegenConfig = {
         contextType: "./create-context#GqlContext",
         mappers: {
           Question: "./db/types#QuestionDB",
+          Answer: "./db/types#AnswerDB",
         },
       },
     },

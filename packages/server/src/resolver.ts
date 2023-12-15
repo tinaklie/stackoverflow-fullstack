@@ -9,9 +9,11 @@ export const resolvers: Resolvers = {
     questionById: async (_root, { id }, { db }) => {
       return db.questions.findOne({ _id: new ObjectId(id) });
     },
-    answers: async (_root, _args, { db }) => {
-      const answers = db.answers.find().toArray();
-      return answers;
+    answers: async (_root, { questionId }, { db }) => {
+      return db.answers
+        .find({ questionId: new ObjectId(questionId) })
+        .sort({ votes: -1 })
+        .toArray();
     },
     // answers: async (_root, args, { db }) => {
     //   console.log(args);
