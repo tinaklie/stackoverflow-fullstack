@@ -3,3 +3,7 @@ packages/client/.vite
 node_modules
 packages/server/src/generated.types.ts
 packages/client/src/gql
+/test-results/
+/playwright-report/
+/playwright/.cache/
+packages/client/playwright-report/
