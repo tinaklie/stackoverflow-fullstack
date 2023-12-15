@@ -30,8 +30,11 @@ export const CreateQuestionPage: React.FC = () => {
     return saveNewQuestion({
       variables: {
         question: {
+          _id: "",
           title: data.title,
+          comments: [],
           description: data.description,
+          votes: 0,
         },
       },
       onCompleted: () => navigate("/"),

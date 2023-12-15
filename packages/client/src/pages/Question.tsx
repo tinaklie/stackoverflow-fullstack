@@ -49,16 +49,26 @@ export const Question: React.FC = () => {
         <h2>{questionItem?.title}</h2>
         <div className="separator-line" />
         <QAItem
+          id={questionItem._id}
+          title={questionItem.title}
           votes={questionItem.votes}
           comments={questionItem.comments}
           text={questionItem.description}
           type="question"
         />
         <div className="answers">
-          <div className="question-counter">{answersItems?.length} questions</div>
+          <div className="question-counter">
+            {answersItems?.length} questions
+          </div>
           {answersItems?.map((a) => (
             <div className="answer-item" key={a._id}>
-              <QAItem votes={a.votes} comments={a.comments} text={a.text} type="answer" />
+              <QAItem
+                id={a._id}
+                votes={a.votes}
+                comments={a.comments}
+                text={a.text}
+                type="answer"
+              />
               <div className="separator-line" />
             </div>
           ))}

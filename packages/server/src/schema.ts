@@ -8,6 +8,10 @@ export const typeDefinitions = /* GraphQL */ `
 
   type Mutation {
     saveQuestion(question: QuestionInput!): ID!
+    updateQuestion(question: QuestionInput!): ID
+    updateAnswer(answer: AnswerInput!): ID
+    addQuestionComment(comment: CommentInput!, questionId: ID!): Question
+    addAnswerComment(comment: CommentInput!, answerId: ID!): Answer
   }
 
   type Question {
@@ -19,8 +23,11 @@ export const typeDefinitions = /* GraphQL */ `
   }
 
   input QuestionInput {
+    _id: ID!
     title: String!
+    comments: [CommentInput!]!
     description: String!
+    votes: Int!
   }
 
   type Answer {
@@ -32,7 +39,9 @@ export const typeDefinitions = /* GraphQL */ `
   }
 
   input AnswerInput {
+    _id: ID!
     questionId: ID!
+    comments: [CommentInput!]!
     text: String!
     votes: Int!
   }
@@ -43,6 +52,7 @@ export const typeDefinitions = /* GraphQL */ `
   }
 
   input CommentInput {
+    _id: ID!
     text: String!
   }
 `;

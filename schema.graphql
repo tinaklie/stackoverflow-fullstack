@@ -7,6 +7,8 @@ type Answer {
 }
 
 input AnswerInput {
+  _id: ID!
+  comments: [CommentInput!]!
   questionId: ID!
   text: String!
   votes: Int!
@@ -18,11 +20,16 @@ type Comment {
 }
 
 input CommentInput {
+  _id: ID!
   text: String!
 }
 
 type Mutation {
+  addAnswerComment(answerId: ID!, comment: CommentInput!): Answer
+  addQuestionComment(comment: CommentInput!, questionId: ID!): Question
   saveQuestion(question: QuestionInput!): ID!
+  updateAnswer(answer: AnswerInput!): ID
+  updateQuestion(question: QuestionInput!): ID
 }
 
 type Query {
@@ -40,6 +47,9 @@ type Question {
 }
 
 input QuestionInput {
+  _id: ID!
+  comments: [CommentInput!]!
   description: String!
   title: String!
+  votes: Int!
 }

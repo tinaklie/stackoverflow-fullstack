@@ -7,10 +7,36 @@
 }
 
 .votes img {
-  border: solid lightgray 1px;
-  border-radius: 50%;
   width: 2em;
   height: 2em;
+}
+
+.vote-counter {
+  border: none;
+  width: 20px;
+  text-align: center;
+  background-color: transparent;
+}
+
+.voting-button {
+  border: solid lightgray 1px;
+  border-radius: 50%;
+  background-color: transparent;
+  padding: 0;
+  font-weight: normal;
+  width: 2em;
+  height: 2em;
+}
+
+.voting-button:focus {
+  border: solid var(--dark) 1px;
+  border-radius: 50%;
+  background-color: var(--main-light);
+  outline: none;
+}
+
+.voting-button:hover {
+  border: solid var(--main) 1px;
 }
 
 .details {
