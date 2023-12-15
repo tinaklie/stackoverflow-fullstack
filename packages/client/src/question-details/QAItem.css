@@ -85,12 +85,42 @@
   padding: 0.5em 0 1em 0;
 }
 
-.add-comment a {
+.add-comment input {
+  font-size: 1em;
+  border: 1px solid var(--main);
+}
+
+.add-comment input:focus {
+  outline: none;
+  border: 1px solid var(--dark);
+}
+
+.add-comment .add-comment-button {
   font-weight: normal;
+  color: #868686;
+}
+
+.add-comment .cancel-button {
+  font-weight: normal;
+  font-size: 0.8em;
   color: #868686;
 }
 
 .add-comment:hover {
   color: var(--main);
   cursor: pointer;
+}
+
+.save-button {
+  margin-left: 1em;
+  padding: 0.5em;
+  font-size: 0.8em;
+  background-color: var(--dark);
+}
+
+.comment-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1em;
 }

@@ -19,6 +19,21 @@ const updateAnswerDocument = graphql(/* GraphQL */ `
   }
 `);
 
+const addQuestionCommentDocument = graphql(/* GraphQL */ `
+  mutation addQuestionComment($comment: CommentInput!, $questionId: ID!) {
+    addQuestionComment(comment: $comment, questionId: $questionId) {
+      _id
+    }
+  }
+`);
+const addAnswerCommentDocument = graphql(/* GraphQL */ `
+  mutation addAnswerComment($comment: CommentInput!, $answerId: ID!) {
+    addAnswerComment(comment: $comment, answerId: $answerId) {
+      _id
+    }
+  }
+`);
+
 interface Props {
   id: string;
   title?: string;
@@ -38,18 +53,22 @@ export const QAItem: React.FC<Props> = ({
 }) => {
   const [updateQuestion] = useMutation(updateQuestionDocument);
   const [updateAnswer] = useMutation(updateAnswerDocument);
+  const [addQuestionComment] = useMutation(addQuestionCommentDocument);
+  const [addAnswerComment] = useMutation(addAnswerCommentDocument);
   const params = useParams();
 
-  const votingMethods = useForm({ values: { votes: votes } });
-  const { register } = votingMethods;
+  const formMethods = useForm({
+    values: { votes: votes, addCommentEnabled: false, commentText: "" },
+  });
+  const { register } = formMethods;
 
   function upvote() {
     console.log(type);
-    vote(votingMethods.getValues().votes + 1);
+    vote(formMethods.getValues().votes + 1);
   }
 
   function downvote() {
-    vote(votingMethods.getValues().votes - 1);
+    vote(formMethods.getValues().votes - 1);
   }
 
   function vote(votes: number) {
@@ -85,10 +104,37 @@ export const QAItem: React.FC<Props> = ({
       });
   }
 
+  function saveComment() {
+    //TODO: validation
+    formMethods.setValue("addCommentEnabled", false);
+
+    if (type === "question")
+      addQuestionComment({
+        variables: {
+          comment: {
+            _id: "",
+            text: formMethods.getValues("commentText"),
+          },
+          questionId: id,
+        },
+      });
+    else
+      addAnswerComment({
+        variables: {
+          comment: {
+            _id: "",
+            text: formMethods.getValues("commentText"),
+          },
+          answerId: id,
+        },
+      });
+  }
+  // TODO : reload on comment post
+
   return (
-    <div className="details">
-      <FormProvider {...votingMethods}>
-        <form>
+    <FormProvider {...formMethods}>
+      <form>
+        <div className="details">
           <div className="votes">
             <button className="voting-button" onClick={upvote}>
               <img src={arrowUp} alt="arrow up" />
@@ -98,33 +144,60 @@ export const QAItem: React.FC<Props> = ({
               <img src={arrowDown} alt="arrow down" />
             </button>
           </div>
-        </form>
-      </FormProvider>
-      <div>
-        <div className="description">
-          {text}
-          <div className="posting-info">
-            <div
-              className={
-                type === "question" ? "questioner-info" : "answerer-info"
-              }
-            >
-              <img src={profileIcon} alt="profileIcon" />
-              Anonymous
+
+          <div>
+            <div className="description">
+              {text}
+              <div className="posting-info">
+                <div
+                  className={
+                    type === "question" ? "questioner-info" : "answerer-info"
+                  }
+                >
+                  <img src={profileIcon} alt="profileIcon" />
+                  Anonymous
+                </div>
+              </div>
+            </div>
+            {comments.length > 0 ? <div className="separator-line" /> : <></>}
+            {comments?.map((c) => (
+              <div key={c._id}>
+                <div className="comment">{c.text} - Anonymous</div>
+                <div className="separator-line" />
+              </div>
+            ))}
+            <div className="add-comment">
+              {formMethods.watch("addCommentEnabled") === true ? (
+                <>
+                  <input type="text" {...register("commentText")} />
+                  <div className="comment-options">
+                    <a
+                      className="cancel-button"
+                      onClick={() =>
+                        formMethods.setValue("addCommentEnabled", false)
+                      }
+                    >
+                      Cancel
+                    </a>
+                    <button className="save-button" onClick={saveComment}>
+                      Save Comment
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <a
+                  className="add-comment-button"
+                  onClick={() =>
+                    formMethods.setValue("addCommentEnabled", true)
+                  }
+                >
+                  Add Comment
+                </a>
+              )}
             </div>
           </div>
         </div>
-        {comments.length > 0 ? <div className="separator-line" /> : <></>}
-        {comments?.map((c) => (
-          <div key={c._id}>
-            <div className="comment">{c.text} - Anonymous</div>
-            <div className="separator-line" />
-          </div>
-        ))}
-        <div className="add-comment">
-          <a>Add Comment</a>
-        </div>
-      </div>
-    </div>
+      </form>
+    </FormProvider>
   );
 };
