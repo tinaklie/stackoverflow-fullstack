@@ -1,9 +1,10 @@
 import "./Question.css";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { graphql } from "../gql";
 import { QAItem } from "../question-details/QAItem";
 import ArrowBack from "./arrow_back.svg";
+import { FormProvider, useForm } from "react-hook-form";
 
 const questionDocument = graphql(/* GraphQL */ `
   query GetQuestion($id: ID!) {
@@ -34,14 +35,44 @@ const answersDocument = graphql(/* GraphQL */ `
   }
 `);
 
+const addAnswerDocument = graphql(/* GraphQL */ `
+  mutation AddAnswer($answer: AnswerInput!) {
+    saveAnswer(answer: $answer)
+  }
+`);
+
+type FormData = {
+  text: string;
+};
+
 export const Question: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
   const { data } = useQuery(questionDocument, { variables: { id: id! } });
   const answers = useQuery(answersDocument, { variables: { id: id! } });
+  const [saveNewAnswer] = useMutation(addAnswerDocument);
 
   const questionItem = data?.questionById;
   const answersItems = answers.data?.answers;
+
+  const formMethods = useForm({ values: { text: "" } });
+  const { register, handleSubmit } = formMethods;
+
+  function saveAnswer(data: FormData) {
+    if (id)
+      return saveNewAnswer({
+        variables: {
+          answer: {
+            _id: "",
+            text: data.text,
+            votes: 0,
+            questionId: id,
+            comments: [],
+          },
+        },
+        onCompleted: () => answers.refetch(),
+      });
+  }
 
   const navigate = useNavigate();
   if (questionItem)
@@ -74,6 +105,17 @@ export const Question: React.FC = () => {
               <div className="separator-line" />
             </div>
           ))}
+        </div>
+        <div>
+          <h3>Your Answer</h3>
+          <FormProvider {...formMethods}>
+            <form onSubmit={handleSubmit(saveAnswer)} className="answerform">
+              <textarea rows={15} id="answertext" {...register("text")} />
+              <div>
+                <button type="submit">save</button>
+              </div>
+            </form>
+          </FormProvider>
         </div>
       </div>
     );

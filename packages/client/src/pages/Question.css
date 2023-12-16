@@ -30,3 +30,24 @@
 .go-back:focus {
   outline: none;
 }
+
+.answerform {
+  max-width: 50%;
+  padding: 1em;
+}
+
+.answerform button {
+  background-color: var(--dark);
+  color: white;
+  padding: 0.5em;
+}
+
+.answerform div {
+  padding: 1em 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+h3 {
+  font-weight: normal;
+}

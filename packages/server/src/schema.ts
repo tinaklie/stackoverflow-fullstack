@@ -8,6 +8,7 @@ export const typeDefinitions = /* GraphQL */ `
 
   type Mutation {
     saveQuestion(question: QuestionInput!): ID!
+    saveAnswer(answer: AnswerInput!): ID!
     updateQuestion(question: QuestionInput!): ID
     updateAnswer(answer: AnswerInput!): ID
     addQuestionComment(comment: CommentInput!, questionId: ID!): Question

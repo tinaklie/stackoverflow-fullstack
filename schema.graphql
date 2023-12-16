@@ -27,6 +27,7 @@ input CommentInput {
 type Mutation {
   addAnswerComment(answerId: ID!, comment: CommentInput!): Answer
   addQuestionComment(comment: CommentInput!, questionId: ID!): Question
+  saveAnswer(answer: AnswerInput!): ID!
   saveQuestion(question: QuestionInput!): ID!
   updateAnswer(answer: AnswerInput!): ID
   updateQuestion(question: QuestionInput!): ID

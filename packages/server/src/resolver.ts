@@ -28,6 +28,16 @@ export const resolvers: Resolvers = {
       });
       return inserted.insertedId.toHexString();
     },
+    saveAnswer: async (_root, { answer }, { db }) => {
+      const inserted = await db.answers.insertOne({
+        _id: new ObjectId(),
+        text: answer.text,
+        questionId: new ObjectId(answer.questionId),
+        votes: 0,
+        comments: [],
+      });
+      return inserted.insertedId.toHexString();
+    },
     updateQuestion: async (_root, { question }, { db }) => {
       const questionDB: QuestionDB = {
         _id: new ObjectId(question._id),
