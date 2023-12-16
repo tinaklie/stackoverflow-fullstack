@@ -26,7 +26,9 @@ interface Props {
 
 export const QuestionItem: React.FC<Props> = ({ question }) => {
   const questionItem = useFragment(questionListFragment, question);
-  const answers = useQuery(answersDocument, { variables: { id: questionItem._id } });
+  const answers = useQuery(answersDocument, {
+    variables: { id: questionItem._id },
+  });
 
   return (
     <div className="questionItem">
@@ -41,7 +43,7 @@ export const QuestionItem: React.FC<Props> = ({ question }) => {
         <div className="description-preview">{questionItem.description}</div>
         <div className="posting-info">
           <img src={profileIcon} alt="profile icon" />
-          Anonymus
+          Anonymous
         </div>
       </div>
     </div>

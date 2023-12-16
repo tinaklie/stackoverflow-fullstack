@@ -18,3 +18,15 @@
 .answer-item {
   padding: 1em 0;
 }
+
+.go-back {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+.go-back:focus {
+  outline: none;
+}

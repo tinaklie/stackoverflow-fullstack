@@ -5,7 +5,7 @@ import profileIcon from "../question-list/profile-icon.svg";
 import { graphql } from "../gql";
 import { useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 
 const updateQuestionDocument = graphql(/* GraphQL */ `
   mutation updateQuestion($question: QuestionInput!) {
@@ -58,22 +58,25 @@ export const QAItem: React.FC<Props> = ({
   const params = useParams();
 
   const formMethods = useForm({
-    values: { votes: votes, addCommentEnabled: false, commentText: "" },
+    values: {
+      votes: votes,
+      addCommentEnabled: false,
+      commentText: "",
+      item: params,
+    },
   });
-  const { register } = formMethods;
 
   function upvote() {
-    console.log(type);
-    vote(formMethods.getValues().votes + 1);
+    vote(votes + 1);
   }
 
   function downvote() {
-    vote(formMethods.getValues().votes - 1);
+    vote(votes - 1);
   }
 
-  function vote(votes: number) {
+  async function vote(votes: number) {
     if (type === "question" && title) {
-      updateQuestion({
+      await updateQuestion({
         variables: {
           question: {
             _id: id,
@@ -88,7 +91,7 @@ export const QAItem: React.FC<Props> = ({
         },
       });
     } else if (params.id)
-      updateAnswer({
+      await updateAnswer({
         variables: {
           answer: {
             _id: id,
@@ -104,32 +107,41 @@ export const QAItem: React.FC<Props> = ({
       });
   }
 
-  function saveComment() {
+  async function saveComment() {
     //TODO: validation
-    formMethods.setValue("addCommentEnabled", false);
-
+    const newComment = { _id: "", text: watch("commentText") };
+    append(newComment);
+    setValue("commentText", "");
     if (type === "question")
-      addQuestionComment({
+      await addQuestionComment({
         variables: {
-          comment: {
-            _id: "",
-            text: formMethods.getValues("commentText"),
-          },
+          comment: newComment,
           questionId: id,
         },
       });
     else
-      addAnswerComment({
+      await addAnswerComment({
         variables: {
-          comment: {
-            _id: "",
-            text: formMethods.getValues("commentText"),
-          },
+          comment: newComment,
           answerId: id,
         },
       });
   }
-  // TODO : reload on comment post
+
+  const { control, register, setValue, watch } = useForm({
+    defaultValues: {
+      votes,
+      addCommentEnabled: false,
+      commentText: "",
+      item: params,
+      comments: comments,
+    },
+  });
+
+  const { fields, append } = useFieldArray({
+    control,
+    name: "comments",
+  });
 
   return (
     <FormProvider {...formMethods}>
@@ -159,23 +171,21 @@ export const QAItem: React.FC<Props> = ({
                 </div>
               </div>
             </div>
-            {comments.length > 0 ? <div className="separator-line" /> : <></>}
-            {comments?.map((c) => (
+            {comments?.length > 0 ? <div className="separator-line" /> : <></>}
+            {fields?.map((c) => (
               <div key={c._id}>
                 <div className="comment">{c.text} - Anonymous</div>
                 <div className="separator-line" />
               </div>
             ))}
             <div className="add-comment">
-              {formMethods.watch("addCommentEnabled") === true ? (
+              {watch("addCommentEnabled") === true ? (
                 <>
                   <input type="text" {...register("commentText")} />
                   <div className="comment-options">
                     <a
                       className="cancel-button"
-                      onClick={() =>
-                        formMethods.setValue("addCommentEnabled", false)
-                      }
+                      onClick={() => setValue("addCommentEnabled", false)}
                     >
                       Cancel
                     </a>
@@ -187,9 +197,7 @@ export const QAItem: React.FC<Props> = ({
               ) : (
                 <a
                   className="add-comment-button"
-                  onClick={() =>
-                    formMethods.setValue("addCommentEnabled", true)
-                  }
+                  onClick={() => setValue("addCommentEnabled", true)}
                 >
                   Add Comment
                 </a>

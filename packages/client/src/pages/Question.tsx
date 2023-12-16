@@ -1,8 +1,9 @@
 import "./Question.css";
 import { useQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { graphql } from "../gql";
 import { QAItem } from "../question-details/QAItem";
+import ArrowBack from "./arrow_back.svg";
 
 const questionDocument = graphql(/* GraphQL */ `
   query GetQuestion($id: ID!) {
@@ -33,8 +34,6 @@ const answersDocument = graphql(/* GraphQL */ `
   }
 `);
 
-// const answersDocument = graphql(/* GraphQL */ ``);
-
 export const Question: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
@@ -43,9 +42,14 @@ export const Question: React.FC = () => {
 
   const questionItem = data?.questionById;
   const answersItems = answers.data?.answers;
+
+  const navigate = useNavigate();
   if (questionItem)
     return (
       <div className="question-main">
+        <button className="go-back" onClick={() => navigate(-1)}>
+          <img src={ArrowBack} alt="back button" />
+        </button>
         <h2>{questionItem?.title}</h2>
         <div className="separator-line" />
         <QAItem
@@ -57,9 +61,7 @@ export const Question: React.FC = () => {
           type="question"
         />
         <div className="answers">
-          <div className="question-counter">
-            {answersItems?.length} questions
-          </div>
+          <div className="question-counter">{answersItems?.length} answers</div>
           {answersItems?.map((a) => (
             <div className="answer-item" key={a._id}>
               <QAItem
