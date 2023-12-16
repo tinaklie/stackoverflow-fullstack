@@ -1,5 +1,7 @@
 .editor-main {
   padding: 1em;
+  width: 60%;
+  justify-self: center;
 }
 
 input,

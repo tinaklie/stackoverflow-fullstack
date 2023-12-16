@@ -128,7 +128,13 @@ export const QAItem: React.FC<Props> = ({
       });
   }
 
-  const { control, register, setValue, watch } = useForm({
+  const {
+    control,
+    register,
+    setValue,
+    watch,
+    formState: { isDirty },
+  } = useForm({
     defaultValues: {
       votes,
       addCommentEnabled: false,
@@ -189,7 +195,11 @@ export const QAItem: React.FC<Props> = ({
                     >
                       Cancel
                     </a>
-                    <button className="save-button" onClick={saveComment}>
+                    <button
+                      className="save-button"
+                      onClick={saveComment}
+                      disabled={!isDirty}
+                    >
                       Save Comment
                     </button>
                   </div>

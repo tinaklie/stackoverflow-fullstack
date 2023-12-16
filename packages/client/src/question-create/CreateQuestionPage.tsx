@@ -3,6 +3,7 @@ import "./CreateQuestionPage.css";
 import { graphql } from "../gql";
 import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
+import ArrowBack from "../pages/arrow_back.svg";
 
 const saveQuestionDocument = graphql(/* GraphQL */ `
   mutation saveQuestion($question: QuestionInput!) {
@@ -42,6 +43,9 @@ export const CreateQuestionPage: React.FC = () => {
   }
   return (
     <div className="editor-main">
+      <button className="go-back" onClick={() => navigate(-1)}>
+        <img src={ArrowBack} alt="back button" />
+      </button>
       <h2>Ask a public question</h2>
 
       <FormProvider {...formMethods}>

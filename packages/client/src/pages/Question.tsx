@@ -56,7 +56,11 @@ export const Question: React.FC = () => {
   const answersItems = answers.data?.answers;
 
   const formMethods = useForm({ values: { text: "" } });
-  const { register, handleSubmit } = formMethods;
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty },
+  } = formMethods;
 
   function saveAnswer(data: FormData) {
     if (id)
@@ -112,7 +116,9 @@ export const Question: React.FC = () => {
             <form onSubmit={handleSubmit(saveAnswer)} className="answerform">
               <textarea rows={15} id="answertext" {...register("text")} />
               <div>
-                <button type="submit">save</button>
+                <button type="submit" disabled={!isDirty}>
+                  save
+                </button>
               </div>
             </form>
           </FormProvider>
