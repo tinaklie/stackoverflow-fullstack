@@ -3,6 +3,8 @@ import { Question } from "./Question";
 import { QuestionList } from "./QuestionList";
 import { MainLayout } from "../layout/MainLayout";
 import { CreateQuestionPage } from "../question-create/CreateQuestionPage";
+import { ErrorPage } from "./ErrorPage";
+import { NotFound } from "./NotFound";
 
 export const routes: RouteObject[] = [
   {
@@ -12,6 +14,7 @@ export const routes: RouteObject[] = [
         <Outlet />
       </MainLayout>
     ),
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -26,4 +29,5 @@ export const routes: RouteObject[] = [
       },
     ],
   },
+  { path: "*", element: <NotFound /> },
 ];
