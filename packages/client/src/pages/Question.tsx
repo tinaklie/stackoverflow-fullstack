@@ -50,7 +50,9 @@ export const Question: React.FC = () => {
 
   const { data } = useQuery(questionDocument, { variables: { id: id! } });
   const answers = useQuery(answersDocument, { variables: { id: id! } });
-  const [saveNewAnswer] = useMutation(addAnswerDocument);
+  const [saveNewAnswer] = useMutation(addAnswerDocument, {
+    refetchQueries: [{ query: answersDocument, variables: { id: id! } }],
+  });
 
   const questionItem = data?.questionById;
   const answersItems = answers.data?.answers;
@@ -74,7 +76,7 @@ export const Question: React.FC = () => {
             comments: [],
           },
         },
-        onCompleted: () => answers.refetch(),
+        onCompleted: () => formMethods.reset(),
       });
   }
 
@@ -99,13 +101,7 @@ export const Question: React.FC = () => {
           <div className="question-counter">{answersItems?.length} answers</div>
           {answersItems?.map((a) => (
             <div className="answer-item" key={a._id}>
-              <QAItem
-                id={a._id}
-                votes={a.votes}
-                comments={a.comments}
-                text={a.text}
-                type="answer"
-              />
+              <QAItem id={a._id} votes={a.votes} comments={a.comments} text={a.text} type="answer" />
               <div className="separator-line" />
             </div>
           ))}

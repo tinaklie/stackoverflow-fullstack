@@ -38,7 +38,7 @@ export const CreateQuestionPage: React.FC = () => {
           votes: 0,
         },
       },
-      onCompleted: () => navigate("/"),
+      onCompleted: () => navigate(-1),
     });
   }
   return (
@@ -52,27 +52,13 @@ export const CreateQuestionPage: React.FC = () => {
         <form onSubmit={formMethods.handleSubmit(saveQuestion)}>
           <div>
             <div>Title</div>
-            <input
-              id="title"
-              type="text"
-              className="title-input"
-              {...register("title")}
-            />
+            <input id="title" type="text" className="title-input" {...register("title")} />
           </div>
           <div className="description">
             <div>Description</div>
-            <textarea
-              id="title"
-              className="title-input"
-              rows={15}
-              {...register("description")}
-            />
+            <textarea id="title" className="title-input" rows={15} {...register("description")} />
           </div>
-          <button
-            type="submit"
-            disabled={!isDirty}
-            className="add-question-button"
-          >
+          <button type="submit" disabled={!isDirty} className="add-question-button">
             Save Question
           </button>
         </form>
